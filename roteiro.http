@@ -1,0 +1,41 @@
+### Roteiro de conferência. Rodar na ordem, com a aplicação recém-iniciada (banco vazio).
+### Funciona no IntelliJ (arquivo .http) e no VS Code com a extensão "REST Client".
+
+### Passo 1: cadastrar LAB-01 (esperado 201)
+POST http://localhost:8080/salas
+Content-Type: application/json
+
+{"codigo": "LAB-01", "nome": "Lab Informatica", "capacidade": 30}
+
+### Passo 2: cadastrar outra com o mesmo código LAB-01 (esperado 409)
+POST http://localhost:8080/salas
+Content-Type: application/json
+
+{"codigo": "LAB-01", "nome": "Outra Sala", "capacidade": 20}
+
+### Passo 3: cadastrar sala sem nome (esperado 400)
+POST http://localhost:8080/salas
+Content-Type: application/json
+
+{"codigo": "LAB-02", "capacidade": 20}
+
+### Passo 4: reservar a sala 1 (esperado 200)
+POST http://localhost:8080/salas/1/reservar
+
+### Passo 5: reservar a sala 1 de novo (esperado 409)
+POST http://localhost:8080/salas/1/reservar
+
+### Passo 6: excluir a sala 1, que está reservada (esperado 409)
+DELETE http://localhost:8080/salas/1
+
+### Passo 7: liberar a sala 1 (esperado 200)
+POST http://localhost:8080/salas/1/liberar
+
+### Passo 8: liberar a sala 1 de novo (esperado 409)
+POST http://localhost:8080/salas/1/liberar
+
+### Passo 9: excluir a sala 1 (esperado 204)
+DELETE http://localhost:8080/salas/1
+
+### Passo 10: buscar a sala 1 (esperado 404)
+GET http://localhost:8080/salas/1
